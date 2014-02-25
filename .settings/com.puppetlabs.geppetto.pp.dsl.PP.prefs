@@ -1,0 +1,3 @@
+com.puppetlabs.geppetto.pp.dsl.PP.searchPath.useProjectSettings=true
+eclipse.preferences.version=1
+puppetPath=lib/*\:environments/$environment/*\:manifests/*\:modules/*\:
