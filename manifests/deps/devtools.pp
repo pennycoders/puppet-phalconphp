@@ -8,7 +8,9 @@ class phalconphp::deps::devtools (
     command => "sudo git clone https://github.com/phalcon/phalcon-devtools.git -b ${version}",
     cwd     => "/usr/share/php",
     unless  => "test -d ./phalcon-devtools",
-    require => [Package['php']]
+    require => [
+      Package['php'],
+      Class['phalconphp::deps::sys']]
   }
 
   exec { 'git-pull-devtools':

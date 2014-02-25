@@ -7,6 +7,7 @@ class phalconphp::deps::zephir {
     command   => 'git clone https://github.com/phalcon/zephir.git',
     cwd       => '/tmp',
     unless    => 'test -d /tmp/zephir',
+    require   => [Class['phalconphp::deps::sys']],
     logoutput => true,
   } ->
   exec { 'git-pull-zephir':
@@ -26,4 +27,4 @@ class phalconphp::deps::zephir {
     logoutput => true,
     require   => [Exec['install-zephir']]
   }
-}
+}

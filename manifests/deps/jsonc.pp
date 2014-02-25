@@ -10,7 +10,7 @@ class phalconphp::deps::jsonc {
     cwd       => '/tmp',
     unless    => 'test -d /tmp/json-c',
     logoutput => true,
-    require   => [Package['git']]
+    require   => [Class['phalconphp::deps::sys']]
   } ->
   exec { 'git-pull-json-c':
     command   => 'git pull',

@@ -25,18 +25,12 @@
 class phalconphp (
   $ensure           = '2.0.0',
   $ensure_sys_deps  = true,
-  $ensure_git       = true,
   $install_zephir   = true,
   $install_devtools = true,
   $devtools_version = '1.3.x') {
   # Install the system dependencies
   if $ensure_sys_deps == true {
     include phalconphp::deps::sys
-  }
-
-  # Install git
-  if $ensure_git == true {
-    include phalconphp::deps::git
   }
 
   # Install zephir
@@ -53,4 +47,4 @@ class phalconphp (
   if $install_devtools == true {
     class { 'phalconphp::deps::devtools': version => $devtools_version }
   }
-}
+}

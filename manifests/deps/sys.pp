@@ -5,6 +5,10 @@ class phalconphp::deps::sys {
     package { 'gcc': ensure => present }
   }
 
+  if defined(Package['git']) == false {
+    package { 'git': ensure => present }
+  }
+
   if defined(Package['make']) == false {
     package { 'make': ensure => present }
   }

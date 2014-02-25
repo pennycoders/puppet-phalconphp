@@ -7,12 +7,21 @@
 # Example usage:
     
     class {'phalconphp':
-            ensure=>'2.0.0', 
             ensure_sys_deps=>true,
+            ensure=>'2.0.0', 
+            install_devtools=>true,
+            devtools_version=>'1.3.x',
+            install_zephir=>true
     }
 
-# Prerequisites:
+# Parameters:
+    ensure_sys_deps - Only change to false only if you really know what you are doing.
+    ensure - Which version (branch) of phalconphp should be compiled
+    install_devtools - Whether or not phalcon devtools should be installed
+    devtools_version - Which version (branch) of the devtools should be installed
+    install_zephir - Whether or not to install zephir
 
+# Prerequisites:
     This module can install everything for you, 
     however, in order to be able to achieve that,
     a few other modules are required:
@@ -22,6 +31,12 @@
         example42/php (>=1.0.0)
 
 # Notes: 
-        
-        This module has only been tested and deployed on CentOS 6.5 64bit
-        Any contributions are welcome.
+    The values in the Usage example above are the default ones,
+    and although they can be changed, i strongly recommend you won't change them,
+    unless you really need a more speciffic approach.
+    
+    This module has only been tested and deployed on CentOS 6.5 64bit
+    Any contributions are welcome.
+
+### TODO: 
+    Add the ability to create phalconphp projects via puppet

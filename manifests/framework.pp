@@ -6,7 +6,9 @@ class phalconphp::framework (
   exec { 'git-clone-phalcon':
     command   => "git clone -b ${version} https://github.com/phalcon/cphalcon.git",
     cwd       => '/tmp',
-    require   => [Exec['install-zephir']],
+    require   => [
+      Class['phalconphp::deps::sys'],
+      Class['phalconphp::deps::zephir']],
     unless    => 'test -d /tmp/cphalcon',
     logoutput => true
   } ->
