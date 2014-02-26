@@ -8,8 +8,6 @@
 # https://github.com/phalcon/cphalcon/branches)
 # [*ensure_sys_deps*]
 # Whether or not the system dependencies should be installed (automake, make, libpcre3, libpcre3-devel,json-c, etc)
-# [*ensure_git*]
-# Whether or not the class should install git
 # [*install_zephir*]
 # Whether you wish to install zephir or not
 # [*install_devtools*]

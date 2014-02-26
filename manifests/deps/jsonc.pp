@@ -3,7 +3,6 @@
 
 class phalconphp::deps::jsonc {
   include phalconphp::deps::sys
-  include phalconphp::deps::git
 
   exec { 'git-clone-json-c':
     command   => 'git clone https://github.com/json-c/json-c.git',
