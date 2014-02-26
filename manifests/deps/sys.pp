@@ -2,7 +2,7 @@
 # Installs gcc, make, automake, autoconf, re2c, pcre, pcre-devel, libcurl, libcurl-devel, wget
 class phalconphp::deps::sys {
   case $::osfamily {
-    'redhat' : { # do something RHEL specific
+    'redhat' : { # Define the package names for rhel
       $packages = [
         'gcc',
         'git',
@@ -18,7 +18,7 @@ class phalconphp::deps::sys {
         'libcurl-devel',
         'wget']
     }
-    'debian' : { # Install the debian
+    'debian' : { # Define the package names for debian
       $packages = [
         'git',
         'gcc',
@@ -33,7 +33,7 @@ class phalconphp::deps::sys {
         'libcurl4-dev',
         'libcurl4-openssl-dev']
     }
-    default  : { #...
+    default  : { # fail, unknown OS
       fail('Unknown Operating System')
     }
   }
