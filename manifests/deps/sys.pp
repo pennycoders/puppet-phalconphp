@@ -4,27 +4,20 @@ class phalconphp::deps::sys (
   $each_compat = false) {
   case $::osfamily {
     'RedHat' : { # Define the package names for rhel
-      case $::operatingsystem {
-        'CentOS' : {
-          $phalcon_deps = [
-            'gcc',
-            'git',
-            'autoconf',
-            'make',
-            'automake',
-            're2c',
-            'pcre',
-            'pcre-devel',
-            'openssl',
-            'openssl-devel',
-            'libcurl',
-            'libcurl-devel',
-            'wget']
-        }
-        default  : {
-          fail('Unsupported RedHAT distro')
-        }
-      }
+      $phalcon_deps = [
+        'gcc',
+        'git',
+        'autoconf',
+        'make',
+        'automake',
+        're2c',
+        'pcre',
+        'pcre-devel',
+        'openssl',
+        'openssl-devel',
+        'libcurl',
+        'libcurl-devel',
+        'wget']
     }
     'Debian' : { # Define the package names for debian
       case $::operatingsystem {
