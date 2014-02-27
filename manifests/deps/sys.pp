@@ -5,7 +5,7 @@ class phalconphp::deps::sys (
   case $::osfamily {
     'redhat' : { # Define the package names for rhel
       if $::operatingsystem == 'centos' {
-        $phalcon_deps = [
+        $pckgs = [
           'gcc',
           'git',
           'autoconf',
@@ -26,7 +26,7 @@ class phalconphp::deps::sys (
     }
     'debian' : { # Define the package names for debian
       if $::operatingsystem == 'ubuntu' {
-        $phalcon_deps = [
+        $pckgs = [
           'git',
           'gcc',
           'make',
@@ -48,9 +48,9 @@ class phalconphp::deps::sys (
     }
   }
 
-  each($phalcon_deps) |$package| {
-    if defined(Package[$package]) == false {
-      package { $package: ensure => present }
+  each($pckgs) |$pckg| {
+    if defined(Package[$pckg]) == false {
+      package { $pckg: ensure => present }
     }
   }
 }
