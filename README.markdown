@@ -12,15 +12,18 @@
             install_devtools=>true,
             devtools_version=>'1.3.x',
             install_zephir=>true,
-            compat_sys_deps=>false
+            compat_sys_deps=>false,
+            zephir_build
     }
 
 # Parameters:
-    ensure_sys_deps - Only change to false only if you really know what you are doing.
-    ensure - Which version (branch) of phalconphp should be compiled
-    install_devtools - Whether or not phalcon devtools should be installed
-    devtools_version - Which version (branch) of the devtools should be installed
-    install_zephir - Whether or not to install zephir
+    ensure_sys_deps
+    ensure 
+    install_devtools
+    devtools_version
+    install_zephir
+    compat_sys_deps
+    zephir_build
 
 # Prerequisites:
     This module can install everything for you, 

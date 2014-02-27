@@ -1,3 +1,10 @@
+alignmentSpecialCommentLines=false
+com.puppetlabs.geppetto.pp.dsl.PP.formatter.comments.useProjectSettings=true
 com.puppetlabs.geppetto.pp.dsl.PP.searchPath.useProjectSettings=true
 eclipse.preferences.version=1
+formatCommentBanners=Truncate
+formatCommentText=NoFormat
+formatMLComments=false
+formatSLComments=false
 puppetPath=lib/*\:environments/$environment/*\:manifests/*\:modules/*\:
+verbatimDoubleDollar=false
