@@ -6,7 +6,7 @@ class phalconphp::deps::sys (
     'RedHat' : { # Define the package names for rhel
       case $::operatingsystem {
         'RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL' : {
-          $packages = [
+          $phalcon_deps = [
             'gcc',
             'git',
             'autoconf',
@@ -29,7 +29,7 @@ class phalconphp::deps::sys (
     'Debian' : { # Define the package names for debian
       case $::operatingsystem {
         'ubuntu', 'debian' : {
-          $packages = [
+          $phalcon_deps = [
             'gcc',
             'git',
             'autoconf',
@@ -55,11 +55,11 @@ class phalconphp::deps::sys (
   }
 
   if $each_compat == true {
-    package { $packages: ensure => present }
+    package { $phalcon_deps: ensure => present }
   } else {
-    each($packages) |$package| {
-      if defined(Package[$package]) == false {
-        package { $package: ensure => present }
+    each($phalcon_deps) |$phalcon_dep| {
+      if defined(Package[$phalcon_dep]) == false {
+        package { $phalcon_dep: ensure => present }
       }
     }
   }

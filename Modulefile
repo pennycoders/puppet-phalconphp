@@ -14,4 +14,4 @@ dependency 'puppetlabs/apt',''
 dependency 'example42/php', ''
 dependency 'example42/puppi', ''
 
-version '1.0.39'
+version '1.0.40'
