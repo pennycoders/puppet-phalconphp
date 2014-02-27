@@ -26,10 +26,11 @@
     This module can install everything for you, 
     however, in order to be able to achieve that,
     a few other modules are required:
-        puppetlabs/stdlib (>=1.0.0)
-        example42/yum (>=1.0.0)
-        puppetlabs/apt (>=1.0.0)
-        example42/php (>=1.0.0)
+        puppetlabs/stdlib
+        example42/yum 
+        puppetlabs/apt
+        example42/php 
+        example42/puppi 
 
 # Notes: 
     The values in the Usage example above are the default ones,

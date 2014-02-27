@@ -8,8 +8,10 @@ description 'Phalconphp puppet module'
 project_page 'https://github.com/pennycoders/puppet-phalconphp'
 
 ## Add dependencies, if any:
-dependency 'puppetlabs/stdlib', '>=1.0.0'
-dependency 'example42/yum', '>=1.0.0'
-dependency 'puppetlabs/apt','>=1.0.0'
-dependency 'example42/php', '>=1.0.0'
-version '1.0.38'
+dependency 'puppetlabs/stdlib', ''
+dependency 'example42/yum', ''
+dependency 'puppetlabs/apt',''
+dependency 'example42/php', ''
+dependency 'example42/puppi', ''
+
+version '1.0.39'
