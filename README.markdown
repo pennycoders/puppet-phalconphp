@@ -11,7 +11,8 @@
             ensure=>'2.0.0', 
             install_devtools=>true,
             devtools_version=>'1.3.x',
-            install_zephir=>true
+            install_zephir=>true,
+            compat_sys_deps=>false
     }
 
 # Parameters:
@@ -35,8 +36,9 @@
     and although they can be changed, i strongly recommend you won't change them,
     unless you really need a more speciffic approach.
     
-    This module has only been tested and deployed on CentOS 6.5 64bit
-    Any contributions are welcome.
+    In regards to compat_sys_deps:
+    
+    See http://forum.phalconphp.com/discussion/1660/phalconphp-puppet-module-compiles-zephir-phalconphp-and-installs
 
 ### TODO: 
     Add the ability to create phalconphp projects via puppet

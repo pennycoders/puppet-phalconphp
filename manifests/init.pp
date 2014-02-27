@@ -16,7 +16,9 @@
 # [*devtools_version*]
 # See https://github.com/phalcon/phalcon-devtools/branches for a valid branch name
 # Requires: see Modulefile
-#
+# [*compat_sys_deps*]
+# Whether or not to use each ( See
+# http://forum.phalconphp.com/discussion/1660/phalconphp-puppet-module-compiles-zephir-phalconphp-and-installs for more details)
 # Sample Usage:
 # class { 'phalconphp':}
 #
@@ -25,10 +27,11 @@ class phalconphp (
   $ensure_sys_deps  = true,
   $install_zephir   = true,
   $install_devtools = true,
-  $devtools_version = '1.3.x') {
+  $devtools_version = '1.3.x',
+  $compat_sys_deps  = false) {
   # Install the system dependencies
   if $ensure_sys_deps == true {
-    include phalconphp::deps::sys
+    class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
   }
 
   # Install zephir
