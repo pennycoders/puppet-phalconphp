@@ -5,7 +5,7 @@ class phalconphp::deps::sys (
   case $::osfamily {
     'RedHat' : { # Define the package names for rhel
       case $::operatingsystem {
-        'RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL' : {
+        'CentOS' : {
           $phalcon_deps = [
             'gcc',
             'git',
@@ -21,7 +21,7 @@ class phalconphp::deps::sys (
             'libcurl-devel',
             'wget']
         }
-        default : {
+        default  : {
           fail('Unsupported RedHAT distro')
         }
       }
@@ -54,9 +54,13 @@ class phalconphp::deps::sys (
     }
   }
 
-  each($phalcon_deps) |$phalcon_dep| {
-    if defined(Package[$phalcon_dep]) == false {
-      package { $phalcon_dep: ensure => present }
+  if $each_compat == true {
+    package { $phalcon_deps: ensure => present }
+  } else {
+    each($phalcon_deps) |$phalcon_dep| {
+      if defined(Package[$phalcon_dep]) == false {
+        package { $phalcon_dep: ensure => present }
+      }
     }
   }
 }
