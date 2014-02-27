@@ -54,13 +54,9 @@ class phalconphp::deps::sys (
     }
   }
 
-  if $each_compat == true {
-    package { $phalcon_deps: ensure => present }
-  } else {
-    each($phalcon_deps) |$phalcon_dep| {
-      if defined(Package[$phalcon_dep]) == false {
-        package { $phalcon_dep: ensure => present }
-      }
+  each($phalcon_deps) |$phalcon_dep| {
+    if defined(Package[$phalcon_dep]) == false {
+      package { $phalcon_dep: ensure => present }
     }
   }
 }
