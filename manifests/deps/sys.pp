@@ -3,7 +3,7 @@
 class phalconphp::deps::sys (
   $each_compat = false) {
   case $::osfamily {
-    'RedHat' : { # Define the package names for rhel
+    'redhat' : { # Define the package names for rhel
       $phalcon_deps = [
         'gcc',
         'git',
