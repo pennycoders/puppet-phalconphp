@@ -54,6 +54,8 @@
     
     This Module has only been rigurously tested on CentOS 6.5 x64
     
+    The devtools do not seem to be fully compatibile with phalconphp 2.x
+    
 
 ### TODO: 
     
