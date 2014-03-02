@@ -3,7 +3,6 @@
 class phalconphp::framework (
   $version,
   $zephir_build = false,
-  $custom_ini   = true,
   $ini_file     = "phalcon.ini") {
   exec { 'git-clone-phalcon':
     command   => "git clone -b ${version} https://github.com/phalcon/cphalcon.git",
