@@ -31,7 +31,7 @@ class phalconphp::framework (
         command   => 'zephir generate',
         cwd       => '/tmp/cphalcon',
         require   => [
-          Class['phalconphp::zephir'],
+          Class['phalconphp::deps::zephir'],
           Exec['git-pull-phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/config.json',
         logoutput => true,
