@@ -66,7 +66,7 @@ class phalconphp::framework (
       target   => "${php::config_dir}/${ini_file}",
       require  => [
         File["${php::config_dir}/${ini_file}"],
-        Exec['remove-phalcon-src-2.0']],
+        Exec['install-phalcon-2.0']],
       loglevel => 'notice'
     }
   } else {
