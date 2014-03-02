@@ -67,7 +67,7 @@ class phalconphp::framework (
       value   => 'phalcon.so',
       target  => "${php::config_dir}/${ini_file}",
       require => [
-        Php::Ini['phalcom-custom-ini'],
+        Php::Ini["phalcon-custom-ini"],
         Class['php'],
         Exec['remove-phalcon-src-2.0']]
     }
@@ -94,7 +94,7 @@ class phalconphp::framework (
       target  => "${php::config_dir}/${ini_file}",
       value   => 'phalcon.so',
       require => [
-        Php::Ini['phalcom-custom-ini'],
+        Php::Ini["phalcon-custom-ini"],
         Class['php'],
         Exec['remove-phalcon-src-1.x']]
     }
