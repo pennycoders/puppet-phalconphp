@@ -41,7 +41,7 @@ class phalconphp::framework (
         command   => 'zephir build',
         cwd       => '/tmp/cphalcon',
         require   => [Exec['generate-phalcon-2.0']],
-        onlyif    => 'test -f ./config.json',
+        onlyif    => 'test -f /tmp/cphalcon/config.json',
         logoutput => true,
       }
     } else {
