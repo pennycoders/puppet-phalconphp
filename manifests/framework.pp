@@ -7,9 +7,7 @@ class phalconphp::framework (
   exec { 'git-clone-phalcon':
     command   => "git clone -b ${version} https://github.com/phalcon/cphalcon.git",
     cwd       => '/tmp',
-    require   => [
-      Class['phalconphp::deps::sys'],
-      Class['phalconphp::deps::zephir']],
+    require   => [Class['phalconphp::deps::sys']],
     unless    => 'test -d /tmp/cphalcon',
     logoutput => true
   } ->
@@ -32,7 +30,9 @@ class phalconphp::framework (
       exec { 'generate-phalcon-2.0':
         command   => 'zephir generate',
         cwd       => '/tmp/cphalcon',
-        require   => [Exec['git-pull-phalcon']],
+        require   => [
+          Class['phalconphp::zephir'],
+          Exec['git-pull-phalcon']],
         onlyif    => 'test -f ./config.json',
         logoutput => true,
       }
