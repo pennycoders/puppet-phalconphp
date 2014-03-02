@@ -33,7 +33,7 @@ class phalconphp::framework (
         require   => [
           Class['phalconphp::zephir'],
           Exec['git-pull-phalcon']],
-        onlyif    => 'test -f ./config.json',
+        onlyif    => 'test -f /tmp/cphalcon/config.json',
         logoutput => true,
       }
 
@@ -62,12 +62,13 @@ class phalconphp::framework (
     }
 
     php::augeas { 'php-load-phalcon-2.0':
-      entry   => 'phalconphp/extension',
-      value   => 'phalcon.so',
-      target  => "${php::config_dir}/${ini_file}",
-      require => [
+      entry     => 'phalconphp/extension',
+      value     => 'phalcon.so',
+      target    => "${php::config_dir}/${ini_file}",
+      require   => [
         File["${php::config_dir}/${ini_file}"],
-        Exec['remove-phalcon-src-2.0']]
+        Exec['remove-phalcon-src-2.0']],
+      logoutput => true
     }
   } else {
     exec { 'install-phalcon-1.x':
@@ -88,12 +89,13 @@ class phalconphp::framework (
     }
 
     php::augeas { 'php-load-phalcon-1.x':
-      entry   => 'phalconphp/extension',
-      target  => "${php::config_dir}/${ini_file}",
-      value   => 'phalcon.so',
-      require => [
+      entry     => 'phalconphp/extension',
+      target    => "${php::config_dir}/${ini_file}",
+      value     => 'phalcon.so',
+      require   => [
         File["${php::config_dir}/${ini_file}"],
-        Exec['remove-phalcon-src-1.x']]
+        Exec['remove-phalcon-src-1.x']],
+      logoutput => true
     }
   }
 }
