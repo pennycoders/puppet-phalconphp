@@ -21,9 +21,10 @@ class phalconphp::framework (
     logoutput => true
   }
 
-  php::ini { "phalcon-custom-ini":
+  php::ini { "${ini_file}":
     target      => $ini_file,
     sapi_target => 'all',
+    value       => ["extension"],
     template    => 'extra-ini.erb',
     require     => [Class['php']]
   }
@@ -67,7 +68,7 @@ class phalconphp::framework (
       value   => 'phalcon.so',
       target  => "${php::config_dir}/${ini_file}",
       require => [
-        Php::Ini["phalcon-custom-ini"],
+        Php::Ini["${ini_file}"],
         Class['php'],
         Exec['remove-phalcon-src-2.0']]
     }
@@ -94,7 +95,7 @@ class phalconphp::framework (
       target  => "${php::config_dir}/${ini_file}",
       value   => 'phalcon.so',
       require => [
-        Php::Ini["phalcon-custom-ini"],
+        Php::Ini["${ini_file}"],
         Class['php'],
         Exec['remove-phalcon-src-1.x']]
     }
