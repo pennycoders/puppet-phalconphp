@@ -24,7 +24,7 @@ class phalconphp::framework (
   php::ini { "phalcon-custom-ini":
     target      => $ini_file,
     sapi_target => 'all',
-    template    => '/php/extra-ini.erb',
+    template    => 'extra-ini.erb',
     require     => [Class['php']]
   }
 
