@@ -21,12 +21,10 @@ class phalconphp::framework (
     logoutput => true
   }
 
-  php::ini { "${ini_file}":
-    target      => $ini_file,
-    sapi_target => 'all',
-    value       => ["extension"],
-    template    => 'extra-ini.erb',
-    require     => [Class['php']]
+  file { "${php::config_dir}/${ini_file}":
+    ensure  => file,
+    require => [Class['php']],
+    purge   => true
   }
 
   if $version == '2.0.0' or $version == 'dev' {
@@ -64,12 +62,11 @@ class phalconphp::framework (
     }
 
     php::augeas { 'php-load-phalcon-2.0':
-      entry   => 'EXT/extension',
+      entry   => 'phalconphp/extension',
       value   => 'phalcon.so',
       target  => "${php::config_dir}/${ini_file}",
       require => [
-        Php::Ini["${ini_file}"],
-        Class['php'],
+        File["${php::config_dir}/${ini_file}"],
         Exec['remove-phalcon-src-2.0']]
     }
   } else {
@@ -91,12 +88,11 @@ class phalconphp::framework (
     }
 
     php::augeas { 'php-load-phalcon-1.x':
-      entry   => 'phalcon/extension',
+      entry   => 'phalconphp/extension',
       target  => "${php::config_dir}/${ini_file}",
       value   => 'phalcon.so',
       require => [
-        Php::Ini["${ini_file}"],
-        Class['php'],
+        File["${php::config_dir}/${ini_file}"],
         Exec['remove-phalcon-src-1.x']]
     }
   }
