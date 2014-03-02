@@ -80,7 +80,7 @@ class phalconphp::framework (
     }
 
     php::augeas { 'php-load-phalcon-1.x':
-      entry   => 'EXT/extension',
+      entry   => 'phalcon/extension',
       value   => 'phalcon.so',
       require => [
         Class['php'],
