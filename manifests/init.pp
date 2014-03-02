@@ -31,6 +31,10 @@
 # otherwise, the method described here will be used:
 # http://blog.phalconphp.com/post/73525793120/phalcon-2-0-alpha-1-released
 #
+#
+# [*ini_file*]
+# Path to the desired ini_file, through which phalconphp will be loaded
+#
 # Actions:
 #
 # Requires: see Modulefile
@@ -46,7 +50,9 @@ class phalconphp (
   $install_devtools = true,
   $devtools_version = '1.3.x',
   $zephir_build     = false,
-  $compat_sys_deps  = false) {
+  $compat_sys_deps  = false,
+  $custom_ini       = true,
+  $ini_file         = "phalcon.ini") {
   # Install the system dependencies
 if $ensure_sys_deps == true {
     class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
@@ -60,7 +66,8 @@ if $install_zephir == true {
   # Install the actual framework
 class { 'phalconphp::framework':
     version      => $ensure,
-    zephir_build => $zephir_build
+    zephir_build => $zephir_build,
+    ini_file     => $ini_file
   }
 
   # Install the phalconphp dev tools

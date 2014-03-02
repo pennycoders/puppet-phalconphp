@@ -2,7 +2,9 @@
 # Installs the actual phalconphp framework
 class phalconphp::framework (
   $version,
-  $zephir_build = false) {
+  $zephir_build = false,
+  $custom_ini   = true,
+  $ini_file     = "phalcon.ini") {
   exec { 'git-clone-phalcon':
     command   => "git clone -b ${version} https://github.com/phalcon/cphalcon.git",
     cwd       => '/tmp',
@@ -18,6 +20,12 @@ class phalconphp::framework (
     onlyif    => 'test -d /tmp/cphalcon',
     require   => [Exec['git-clone-phalcon']],
     logoutput => true
+  }
+
+  php::ini { "${ini_file}":
+    target      => $ini_file,
+    sapi_target => 'all',
+    require     => [Class['php']]
   }
 
   if $version == '2.0.0' or $version == 'dev' {
@@ -57,7 +65,9 @@ class phalconphp::framework (
     php::augeas { 'php-load-phalcon-2.0':
       entry   => 'EXT/extension',
       value   => 'phalcon.so',
+      target  => "${php::config_dir}/${ini_file}",
       require => [
+        Php::Ini[$ini_file],
         Class['php'],
         Exec['remove-phalcon-src-2.0']]
     }
@@ -81,8 +91,10 @@ class phalconphp::framework (
 
     php::augeas { 'php-load-phalcon-1.x':
       entry   => 'phalcon/extension',
+      target  => "${php::config_dir}/${ini_file}",
       value   => 'phalcon.so',
       require => [
+        Php::Ini[$ini_file],
         Class['php'],
         Exec['remove-phalcon-src-1.x']]
     }
