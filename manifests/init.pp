@@ -64,7 +64,7 @@ if $ensure_sys_deps == true {
 
   # Install zephir
 if $install_zephir == true {
-    include phalconphp::deps::zephir
+    class { 'phalconphp::deps::zephir': debug => $debug }
   }
 
   # Install the actual framework
@@ -77,6 +77,9 @@ class { 'phalconphp::framework':
 
   # Install the phalconphp dev tools
 if $install_devtools == true {
-    class { 'phalconphp::deps::devtools': version => $devtools_version }
+    class { 'phalconphp::deps::devtools':
+      version => $devtools_version,
+      debug   => $debug
+    }
   }
 }

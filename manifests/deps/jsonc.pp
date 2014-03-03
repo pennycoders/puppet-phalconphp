@@ -1,14 +1,15 @@
 # Class: phalconphp::deps::jsonc
 # Installs json-c (https://github.com/json-c/json-c)
 
-class phalconphp::deps::jsonc {
+class phalconphp::deps::jsonc (
+  $debug = false) {
   include phalconphp::deps::sys
 
   exec { 'git-clone-json-c':
     command   => 'git clone https://github.com/json-c/json-c.git',
     cwd       => '/tmp',
     unless    => 'test -d /tmp/json-c',
-    logoutput => true,
+    logoutput => $debug,
     require   => [Class['phalconphp::deps::sys']]
   } ->
   exec { 'git-pull-json-c':
@@ -16,12 +17,12 @@ class phalconphp::deps::jsonc {
     cwd       => '/tmp/json-c',
     onlyif    => 'test -d /tmp/json-c',
     require   => [Exec['git-clone-json-c']],
-    logoutput => true
+    logoutput => $debug
   } ->
   exec { 'autogen-json-c':
     command   => 'sh ./autogen.sh',
     cwd       => '/tmp/json-c',
-    logoutput => true,
+    logoutput => $debug,
     require   => [Exec['git-pull-json-c']],
   } ->
   exec { 'configure-json-c':
@@ -29,7 +30,7 @@ class phalconphp::deps::jsonc {
     cwd       => '/tmp/json-c',
     onlyif    => 'test -f /tmp/json-c/configure',
     require   => [Exec['autogen-json-c']],
-    logoutput => true
+    logoutput => $debug
   } ->
   exec { 'make-json-c':
     command   => "make -j${::processorcount}",
@@ -40,7 +41,7 @@ class phalconphp::deps::jsonc {
   exec { 'install-json-c':
     command   => "sudo make -j${::processorcount} install",
     cwd       => '/tmp/json-c',
-    logoutput => true,
+    logoutput => $debug,
     require   => [Exec['make-json-c']]
   } ->
   exec { 'remove-json-c-source':
