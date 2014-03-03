@@ -45,7 +45,7 @@ class phalconphp::framework (
       }
     } else {
       exec { 'install-phalcon-2.0':
-        command   => "./install-test",
+        command   => "/tmp/cphalcon/ext/install-test",
         cwd       => '/tmp/cphalcon/ext',
         require   => [Exec['git-pull-phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/ext/install-test',
