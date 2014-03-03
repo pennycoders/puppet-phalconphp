@@ -3,8 +3,9 @@
 # Parameters:
 # [*version*] - desired devtools version  - See https://github.com/phalcon/phalcon-devtools/branches for valid branch names
 class phalconphp::deps::devtools (
-  $version = '1.3.x',
-  $debug   = false) {
+  $version  = '1.3.x',
+  $debug    = false,
+  $loglevel = 'warning') {
   exec { 'git-clone-devtools':
     command   => "sudo git clone https://github.com/phalcon/phalcon-devtools.git -b ${version}",
     cwd       => "/usr/share/php",
@@ -12,7 +13,8 @@ class phalconphp::deps::devtools (
     require   => [
       Package['php'],
       Class['phalconphp::deps::sys']],
-    logoutput => $debug
+    logoutput => $debug,
+    loglevel  => $loglevel
   }
 
   exec { 'git-pull-devtools':
@@ -20,7 +22,8 @@ class phalconphp::deps::devtools (
     cwd       => "/usr/share/php/phalcon-devtools",
     onlyif    => "sudo test -d ./phalcon-devtools",
     require   => [Exec['git-clone-devtools']],
-    logoutput => $debug
+    logoutput => $debug,
+    loglevel  => $loglevel
   }
 
   file { '/usr/bin/phalcon':
@@ -30,15 +33,16 @@ class phalconphp::deps::devtools (
     require  => [
       Class['phalconphp::framework'],
       Exec['git-pull-devtools']],
-    loglevel => 'notice'
+    loglevel => $loglevel
   }
 
   file { '/usr/share/php/phalcon-devtools':
-    ensure  => directory,
-    recurse => true,
-    owner   => 'www-data',
-    group   => 'www-data',
-    require => [Exec['git-pull-devtools']]
+    ensure   => directory,
+    recurse  => true,
+    owner    => 'www-data',
+    group    => 'www-data',
+    require  => [Exec['git-pull-devtools']],
+    loglevel => $loglevel
   }
 
   exec { 'chmod+x-devtools':
@@ -46,6 +50,7 @@ class phalconphp::deps::devtools (
     require   => [
       File['/usr/share/php/phalcon-devtools'],
       File['/usr/bin/phalcon']],
-    logoutput => $debug
+    logoutput => $debug,
+    loglevel  => $loglevel
   }
 }

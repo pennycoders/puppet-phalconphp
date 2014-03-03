@@ -4,26 +4,29 @@ class phalconphp::framework (
   $version,
   $zephir_build = false,
   $ini_file     = "phalcon.ini",
-  $debug        = false) {
+  $debug        = false,
+  $loglevel     = 'warning') {
   exec { 'git-clone-phalcon':
     command   => "git clone -b ${version} https://github.com/phalcon/cphalcon.git",
     cwd       => '/tmp',
     require   => [Class['phalconphp::deps::sys']],
     unless    => 'test -d /tmp/cphalcon',
-    logoutput => $debug
+    logoutput => $debug,
+    loglevel  => $loglevel
   } ->
   exec { 'git-pull-phalcon':
     command   => 'git pull',
     cwd       => '/tmp/cphalcon',
     onlyif    => 'test -d /tmp/cphalcon',
     require   => [Exec['git-clone-phalcon']],
-    logoutput => $debug
+    logoutput => $debug,
+    loglevel  => $loglevel
   }
 
   file { "${php::config_dir}/${ini_file}":
     ensure   => file,
     require  => [Class['php']],
-    loglevel => 'notice'
+    loglevel => $loglevel
   }
 
   if $version == '2.0.0' or $version == 'dev' {
@@ -35,14 +38,16 @@ class phalconphp::framework (
           Class['phalconphp::deps::zephir'],
           Exec['git-pull-phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/config.json',
-        logoutput => $debug
+        logoutput => $debug,
+        loglevel  => $loglevel
       }
 
       exec { 'install-phalcon-2.0':
         command   => 'zephir build',
         cwd       => '/tmp/cphalcon',
         require   => [Exec['generate-phalcon-2.0']],
-        logoutput => $debug
+        logoutput => $debug,
+        loglevel  => $loglevel
       }
     } else {
       exec { 'install-phalcon-2.0':
@@ -50,7 +55,8 @@ class phalconphp::framework (
         cwd       => '/tmp/cphalcon/ext',
         require   => [Exec['git-pull-phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/ext/install-test',
-        logoutput => $debug
+        logoutput => $debug,
+        loglevel  => $loglevel
       }
     }
 
@@ -58,7 +64,8 @@ class phalconphp::framework (
       cwd       => '/tmp',
       command   => 'rm ./cphalcon -R -f',
       require   => [Exec['install-phalcon-2.0']],
-      logoutput => $debug
+      logoutput => $debug,
+      loglevel  => $loglevel
     }
 
     php::augeas { 'php-load-phalcon-2.0':
@@ -68,7 +75,7 @@ class phalconphp::framework (
       require  => [
         File["${php::config_dir}/${ini_file}"],
         Exec['remove-phalcon-src-2.0']],
-      loglevel => 'notice'
+      loglevel => $loglevel
     }
   } else {
     exec { 'install-phalcon-1.x':
@@ -76,7 +83,8 @@ class phalconphp::framework (
       cwd       => '/tmp/cphalcon/build',
       onlyif    => 'test -f /tmp/cphalcon/build/install',
       require   => [Exec['git-pull-phalcon']],
-      logoutput => $debug
+      logoutput => $debug,
+      loglevel  => $loglevel
     }
 
     exec { 'remove-phalcon-src-1.x':
@@ -85,7 +93,8 @@ class phalconphp::framework (
       require   => [
         Exec['git-pull-phalcon'],
         Exec['install-phalcon-1.x']],
-      logoutput => $debug
+      logoutput => $debug,
+      loglevel  => $loglevel
     }
 
     php::augeas { 'php-load-phalcon-1.x':
@@ -95,7 +104,7 @@ class phalconphp::framework (
       require  => [
         File["${php::config_dir}/${ini_file}"],
         Exec['remove-phalcon-src-1.x']],
-      loglevel => 'notice'
+      loglevel => $loglevel
     }
   }
 }

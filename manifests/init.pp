@@ -38,6 +38,9 @@
 # [*debug*]
 # Make the commands execution more verbose - Defaults to false
 #
+# [*loglevel*]
+# Sets the level that information will be logged. The log levels have the biggest impact when logs are sent to syslog (which is currently the default).
+# Valid values are debug, info, notice, warning, err, alert, emerg, crit, verbose.
 # Actions:
 #
 # Requires: see Modulefile
@@ -56,15 +59,22 @@ class phalconphp (
   $compat_sys_deps  = false,
   $custom_ini       = true,
   $ini_file         = "phalcon.ini",
-  $debug            = false) {
+  $debug            = false,
+  $loglevel         = 'warning') {
   # Install the system dependencies
 if $ensure_sys_deps == true {
-    class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
+    class { 'phalconphp::deps::sys':
+      each_compat => $compat_sys_deps,
+      loglevel    => $loglevel
+    }
   }
 
   # Install zephir
 if $install_zephir == true {
-    class { 'phalconphp::deps::zephir': debug => $debug }
+    class { 'phalconphp::deps::zephir':
+      debug    => $debug,
+      loglevel => $loglevel
+    }
   }
 
   # Install the actual framework
@@ -72,14 +82,16 @@ class { 'phalconphp::framework':
     version      => $ensure,
     zephir_build => $zephir_build,
     ini_file     => $ini_file,
-    debug        => $debug
+    debug        => $debug,
+    loglevel     => $loglevel
   }
 
   # Install the phalconphp dev tools
 if $install_devtools == true {
     class { 'phalconphp::deps::devtools':
-      version => $devtools_version,
-      debug   => $debug
+      version  => $devtools_version,
+      debug    => $debug,
+      loglevel => $loglevel
     }
   }
 }
