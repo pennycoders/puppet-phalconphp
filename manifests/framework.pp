@@ -21,9 +21,9 @@ class phalconphp::framework (
   }
 
   file { "${php::config_dir}/${ini_file}":
-    ensure    => file,
-    require   => [Class['php']],
-    logoutput => $debug
+    ensure   => file,
+    require  => [Class['php']],
+    loglevel => 'notice'
   }
 
   if $version == '2.0.0' or $version == 'dev' {
