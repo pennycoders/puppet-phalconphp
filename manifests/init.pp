@@ -35,6 +35,9 @@
 # [*ini_file*]
 # Path to the desired ini_file, through which phalconphp will be loaded
 #
+# [*debug*]
+# Make the commands execution more verbose - Defaults to false
+#
 # Actions:
 #
 # Requires: see Modulefile
@@ -44,7 +47,7 @@
 #
 
 class phalconphp (
-  $ensure           = '2.0.0',
+  $ensure           = 'master',
   $ensure_sys_deps  = true,
   $install_zephir   = true,
   $install_devtools = true,
@@ -52,7 +55,8 @@ class phalconphp (
   $zephir_build     = false,
   $compat_sys_deps  = false,
   $custom_ini       = true,
-  $ini_file         = "phalcon.ini") {
+  $ini_file         = "phalcon.ini",
+  $debug            = false) {
   # Install the system dependencies
 if $ensure_sys_deps == true {
     class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }

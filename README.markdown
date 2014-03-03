@@ -8,12 +8,14 @@
     
     class {'phalconphp':
             ensure_sys_deps=>true,
-            ensure=>'2.0.0', 
+            ensure=>'master', 
             install_devtools=>true,
             devtools_version=>'1.3.x',
             install_zephir=>true,
             compat_sys_deps=>false,
-            zephir_build
+            zephir_build=>false,
+            ini_file=>'phalcon.ini',
+            debug=>false
     }
 
 ### Gittip: ###
@@ -30,6 +32,8 @@
     install_zephir
     compat_sys_deps
     zephir_build
+    ini_file
+    debug
 
 ### Prerequisites: ###
 
