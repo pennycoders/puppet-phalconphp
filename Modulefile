@@ -14,4 +14,4 @@ dependency 'puppetlabs/apt','>=1.0.0'
 dependency 'example42/php','>=2.0.17'
 dependency 'example42/puppi','>=1.0.0'
 
-version '1.0.54'
+version '1.0.55'
