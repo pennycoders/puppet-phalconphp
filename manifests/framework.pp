@@ -48,7 +48,7 @@ class phalconphp::framework (
         command   => "./install-test",
         cwd       => '/tmp/cphalcon/ext',
         require   => [Exec['git-pull-phalcon']],
-        onlyif    => 'test -f /tmp/cphalcon/ext/install-test',
+        onlyif    => 'test -f /tmp/cphalcon/ext/test-install',
         logoutput => true
       }
     }
@@ -66,7 +66,7 @@ class phalconphp::framework (
       target   => "${php::config_dir}/${ini_file}",
       require  => [
         File["${php::config_dir}/${ini_file}"],
-        Exec['install-phalcon-2.0']],
+        Exec['remove-phalcon-src-2.0']],
       loglevel => 'notice'
     }
   } else {
