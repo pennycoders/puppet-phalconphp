@@ -71,7 +71,8 @@ if $install_zephir == true {
 class { 'phalconphp::framework':
     version      => $ensure,
     zephir_build => $zephir_build,
-    ini_file     => $ini_file
+    ini_file     => $ini_file,
+    debug        => $debug
   }
 
   # Install the phalconphp dev tools
