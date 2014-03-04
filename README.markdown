@@ -11,7 +11,7 @@
             ensure=>'master', 
             install_devtools=>true,
             devtools_version=>'1.3.x',
-            install_zephir=>true,
+            install_zephir=>false,
             compat_sys_deps=>false,
             zephir_build=>false,
             ini_file=>'phalcon.ini',

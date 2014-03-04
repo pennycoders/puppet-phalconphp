@@ -52,9 +52,9 @@
 class phalconphp (
   $ensure           = 'master',
   $ensure_sys_deps  = true,
-  $install_zephir   = true,
+  $install_zephir   = false,
   $install_devtools = true,
-  $devtools_version = '1.3.x',
+  $devtools_version = 'master',
   $zephir_build     = false,
   $compat_sys_deps  = false,
   $custom_ini       = true,
