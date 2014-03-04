@@ -3,9 +3,8 @@
 # Parameters:
 # [*version*] - desired devtools version  - See https://github.com/phalcon/phalcon-devtools/branches for valid branch names
 class phalconphp::deps::devtools (
-  $version  = '1.3.x',
-  $debug    = false,
-  $loglevel = 'warning') {
+  $version = '1.3.x',
+  $debug   = false) {
   exec { 'git-clone-devtools':
     command   => "sudo git clone https://github.com/phalcon/phalcon-devtools.git -b ${version}",
     cwd       => "/usr/share/php",
@@ -13,8 +12,7 @@ class phalconphp::deps::devtools (
     require   => [
       Package['php'],
       Class['phalconphp::deps::sys']],
-    logoutput => $debug,
-    loglevel  => $loglevel
+    logoutput => $debug
   }
 
   exec { 'git-pull-devtools':
@@ -22,27 +20,24 @@ class phalconphp::deps::devtools (
     cwd       => "/usr/share/php/phalcon-devtools",
     onlyif    => "sudo test -d ./phalcon-devtools",
     require   => [Exec['git-clone-devtools']],
-    logoutput => $debug,
-    loglevel  => $loglevel
+    logoutput => $debug
   }
 
   file { '/usr/bin/phalcon':
-    ensure   => link,
-    path     => '/usr/bin/phalcon',
-    target   => "/usr/share/php/phalcon-devtools/phalcon.php",
-    require  => [
+    ensure  => link,
+    path    => '/usr/bin/phalcon',
+    target  => "/usr/share/php/phalcon-devtools/phalcon.php",
+    require => [
       Class['phalconphp::framework'],
-      Exec['git-pull-devtools']],
-    loglevel => $loglevel
+      Exec['git-pull-devtools']]
   }
 
   file { '/usr/share/php/phalcon-devtools':
-    ensure   => directory,
-    recurse  => true,
-    owner    => 'www-data',
-    group    => 'www-data',
-    require  => [Exec['git-pull-devtools']],
-    loglevel => $loglevel
+    ensure  => directory,
+    recurse => true,
+    owner   => 'www-data',
+    group   => 'www-data',
+    require => [Exec['git-pull-devtools']]
   }
 
   exec { 'chmod+x-devtools':
@@ -50,7 +45,6 @@ class phalconphp::deps::devtools (
     require   => [
       File['/usr/share/php/phalcon-devtools'],
       File['/usr/bin/phalcon']],
-    logoutput => $debug,
-    loglevel  => $loglevel
+    logoutput => $debug
   }
 }

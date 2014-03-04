@@ -1,8 +1,7 @@
 # Class: phalconphp::deps::sys
 # Installs gcc, make, automake, autoconf, re2c, pcre, pcre-devel, libcurl, libcurl-devel, wget
 class phalconphp::deps::sys (
-  $each_compat = false,
-  $loglevel    = 'warning') {
+  $each_compat = false) {
   case $::osfamily {
     'RedHat' : { # Define the package names for rhel
       case $::operatingsystem {
@@ -56,17 +55,11 @@ class phalconphp::deps::sys (
   }
 
   if $each_compat == true {
-    package { $phalcon_deps:
-      ensure   => present,
-      loglevel => $loglevel
-    }
+    package { $phalcon_deps: ensure => present }
   } else {
     each($phalcon_deps) |$phalcon_dep| {
       if defined(Package[$phalcon_dep]) == false {
-        package { $phalcon_dep:
-          ensure   => present,
-          loglevel => $loglevel
-        }
+        package { $phalcon_dep: ensure => present }
       }
     }
   }

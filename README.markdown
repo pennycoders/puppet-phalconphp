@@ -15,8 +15,7 @@
             compat_sys_deps=>false,
             zephir_build=>false,
             ini_file=>'phalcon.ini',
-            debug=>false,
-            loglevel=>'warning'
+            debug=>false
     }
 
 ### Gittip: ###
@@ -35,7 +34,6 @@
     zephir_build
     ini_file
     debug
-    loglevel 
 
 ### Prerequisites: ###
 
