@@ -9,23 +9,27 @@ class phalconphp::deps::zephir (
     cwd       => '/tmp',
     unless    => 'test -d /tmp/zephir',
     require   => [Class['phalconphp::deps::sys']],
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   } ->
   exec { 'git-pull-zephir':
     command   => 'git pull',
     cwd       => '/tmp/zephir',
     onlyif    => 'test -d /tmp/zephir',
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   } ->
   exec { 'install-zephir':
     command   => './install -c',
     cwd       => '/tmp/zephir',
     require   => [Class['phalconphp::deps::jsonc']],
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   } ->
   exec { 'check-zephir':
     command   => 'zephir version',
     logoutput => $debug,
-    require   => [Exec['install-zephir']]
+    require   => [Exec['install-zephir']],
+    timeout   => 0
   }
 }

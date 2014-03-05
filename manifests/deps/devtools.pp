@@ -12,7 +12,8 @@ class phalconphp::deps::devtools (
     require   => [
       Package['php'],
       Class['phalconphp::deps::sys']],
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   }
 
   exec { 'git-pull-devtools':
@@ -20,7 +21,8 @@ class phalconphp::deps::devtools (
     cwd       => "/usr/share/php/phalcon-devtools",
     onlyif    => "sudo test -d ./phalcon-devtools",
     require   => [Exec['git-clone-devtools']],
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   }
 
   file { '/usr/bin/phalcon':
@@ -45,6 +47,7 @@ class phalconphp::deps::devtools (
     require   => [
       File['/usr/share/php/phalcon-devtools'],
       File['/usr/bin/phalcon']],
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   }
 }

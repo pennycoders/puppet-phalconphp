@@ -10,14 +10,16 @@ class phalconphp::framework (
     cwd       => '/tmp',
     require   => [Class['phalconphp::deps::sys']],
     unless    => 'test -d /tmp/cphalcon',
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   } ->
   exec { 'git-pull-phalcon':
     command   => 'git pull',
     cwd       => '/tmp/cphalcon',
     onlyif    => 'test -d /tmp/cphalcon',
     require   => [Exec['git-clone-phalcon']],
-    logoutput => $debug
+    logoutput => $debug,
+    timeout   => 0
   }
 
   file { "${php::config_dir}/${ini_file}":
@@ -34,14 +36,16 @@ class phalconphp::framework (
           Class['phalconphp::deps::zephir'],
           Exec['git-pull-phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/config.json',
-        logoutput => $debug
+        logoutput => $debug,
+        timeout   => 0
       }
 
       exec { 'install-phalcon-2.0':
         command   => 'zephir build',
         cwd       => '/tmp/cphalcon',
         require   => [Exec['generate-phalcon-2.0']],
-        logoutput => $debug
+        logoutput => $debug,
+        timeout   => 0
       }
     } else {
       exec { 'install-phalcon-2.0':
@@ -49,7 +53,8 @@ class phalconphp::framework (
         cwd       => '/tmp/cphalcon/ext',
         require   => [Exec['git-pull-phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/ext/install-test',
-        logoutput => $debug
+        logoutput => $debug,
+        timeout   => 0
       }
     }
 
@@ -57,7 +62,8 @@ class phalconphp::framework (
       cwd       => '/tmp',
       command   => 'rm ./cphalcon -R -f',
       require   => [Exec['install-phalcon-2.0']],
-      logoutput => $debug
+      logoutput => $debug,
+      timeout   => 0
     }
 
     php::augeas { 'php-load-phalcon-2.0':
@@ -75,7 +81,7 @@ class phalconphp::framework (
       onlyif    => 'test -f /tmp/cphalcon/build/install',
       require   => [Exec['git-pull-phalcon']],
       logoutput => $debug,
-      loglevel  => $loglevel
+      timeout   => 0
     }
 
     exec { 'remove-phalcon-src-1.x':
@@ -85,7 +91,7 @@ class phalconphp::framework (
         Exec['git-pull-phalcon'],
         Exec['install-phalcon-1.x']],
       logoutput => $debug,
-      loglevel  => $loglevel
+      timeout   => 0
     }
 
     php::augeas { 'php-load-phalcon-1.x':
