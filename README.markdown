@@ -10,14 +10,19 @@
             ensure_sys_deps=>true,
             ensure=>'master', 
             install_devtools=>true,
-            devtools_version=>'1.3.x',
+            devtools_version=>'master',
             install_zephir=>false,
             compat_sys_deps=>false,
             zephir_build=>false,
             ini_file=>'phalcon.ini',
             debug=>false
     }
-
+### Required params: ###
+    ensure
+    ensure_sys_deps
+    install_devtools (needs to be se to true)
+    devtools_version
+    
 ### Gittip: ###
 
 [![Support via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/pennycoders/)
