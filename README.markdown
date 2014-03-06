@@ -1,8 +1,8 @@
 # Phalcon Puppet module
 
-Phalcon Framework Puppet module. This installs Phalcon framework and optionally devtools, as well as all the other dependencies needed by it. 
+Puppet is IT automation software that helps system administrators manage infrastructure throughout its lifecycle, from provisioning and configuration to orchestration and reporting. This is a Puppet module that installs Phalcon framework and optionally devtools, as well as all the other dependencies needed by them. 
 
-## Example usage
+### Example usage
     
 ```puppet
 class { 'phalconphp':
@@ -53,7 +53,7 @@ example42/php
 example42/puppi
 ```
 
-## Gittip:
+### Gittip
 
 [![Support the maintainer via Gittip](https://rawgithub.com/twolfson/gittip-badge/0.2.0/dist/gittip.png)](https://www.gittip.com/pennycoders/)
 
