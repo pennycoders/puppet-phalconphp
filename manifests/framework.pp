@@ -76,7 +76,7 @@ class phalconphp::framework (
     }
   } else {
     exec { 'install-phalcon-1.x':
-      command   => 'sudo ./build/install',
+      command   => 'sudo ./install',
       cwd       => '/tmp/cphalcon/build',
       onlyif    => 'test -f /tmp/cphalcon/build/install',
       require   => [Exec['git-pull-phalcon']],
