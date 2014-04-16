@@ -1,6 +1,7 @@
 # Phalcon Puppet module
 
-Puppet is IT automation software that helps system administrators manage infrastructure throughout its lifecycle, from provisioning and configuration to orchestration and reporting. This is a Puppet module that installs Phalcon framework and optionally devtools, as well as all the other dependencies needed by them. 
+Puppet is IT automation software that helps system administrators manage infrastructure throughout its lifecycle, from provisioning and configuration to orchestration and reporting. This is a Puppet module that installs Phalcon framework and optionally devtools, as well as all the other dependencies needed by them. I've tested this module both in production, and on a vagrant box, it worked flawlessly after the last fixes, in both cases. Don't hesitate 
+to contribute, or open any issues.
 
 ### Example usage
     
@@ -14,7 +15,8 @@ class { 'phalconphp':
     compat_sys_deps => false,
     zephir_build => false,
     ini_file => 'phalcon.ini',
-    debug => false
+    debug => false,
+    zephir_install_dir=>'/usr/share/php/zephir'
 }
 ```    
     
@@ -72,3 +74,5 @@ Devtools does not seem to be fully compatible with phalconphp 2.x
 * Add the ability to create phalcon projects via puppet
 * Add / test support for Debian platforms
     
+### Credits: ###
+    Special thanks to @ifrpl, for forking the repo (His improvements made me get started on getting this module sorted out the way it is now)

@@ -46,4 +46,5 @@ class phalconphp::deps::zephir (
       '/usr/sbin'],
     require   => [File['zephir-bin']],
     timeout   => 0
-  }
+  }
+}
