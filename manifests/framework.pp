@@ -67,7 +67,7 @@ class phalconphp::framework (
         Vcsrepo['phalcon'],
         Class['phalconphp::deps::sys'],
         ],
-      onlyif    => "test -f ${workdir}/build/install",
+      onlyif    => "test -f ${tmpdir}/build/install",
       command   => 'sudo ./install',
       cwd       => "${workdir}/build",
       path      => [
@@ -80,5 +80,12 @@ class phalconphp::framework (
     }
   }
 
-  php::module { 'phalcon': require => Exec['clean'] }
+  php::augeas { "load-phalcon-${version}":
+    entry   => 'phalconphp/extension',
+    value   => 'phalcon.so',
+    target  => "${php::config_dir}/${ini_file}",
+    require => [
+      Exec['install'],
+      File["${php::config_dir}/${ini_file}"]]
+  }
 }
