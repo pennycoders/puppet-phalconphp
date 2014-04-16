@@ -62,13 +62,21 @@ class phalconphp (
   $debug            = false) {
   # Install the system dependencies
 
+  augeas { "disable-require-tty": changes => ['set /files/etc/sudoers/Defaults[*]/requiretty/negate ""'] }
+
   if $ensure_sys_deps == true {
-    class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
+    class { 'phalconphp::deps::sys':
+      each_compat => $compat_sys_deps,
+      require     => [Augeas["disable-require-tty"]]
+    }
   }
 
   # Install zephir
 if $install_zephir == true {
-    class { 'phalconphp::deps::zephir': debug => $debug }
+    class { 'phalconphp::deps::zephir':
+      debug   => $debug,
+      require => [Augeas["disable-require-tty"]]
+    }
   }
 
   # Install the actual framework
@@ -76,14 +84,16 @@ class { 'phalconphp::framework':
     version      => $ensure,
     zephir_build => $zephir_build,
     ini_file     => $ini_file,
-    debug        => $debug
+    debug        => $debug,
+    require      => [Augeas["disable-require-tty"]]
   }
 
   # Install the phalconphp dev tools
 if $install_devtools == true {
     class { 'phalconphp::deps::devtools':
       version => $devtools_version,
-      debug   => $debug
+      debug   => $debug,
+      require => [Augeas["disable-require-tty"]]
     }
   }
 }

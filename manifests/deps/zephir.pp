@@ -14,7 +14,7 @@ class phalconphp::deps::zephir (
   }
 
   exec { 'install-zephir':
-    command   => './install',
+    command   => './install -c',
     cwd       => '/tmp/zephir',
     require   => [Vcsrepo['zephir']],
     logoutput => $debug,
