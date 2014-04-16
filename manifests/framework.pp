@@ -82,7 +82,6 @@ class phalconphp::framework (
       value   => 'phalcon.so',
       require => [
         File["${php::config_dir}/${ini_file}"],
-        Exec['remove-phalcon-src-1.x']]
     }
   }
 }
