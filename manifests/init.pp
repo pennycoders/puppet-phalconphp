@@ -61,7 +61,6 @@ class phalconphp (
   $ini_file         = "phalcon.ini",
   $debug            = false) {
   # Install the system dependencies
-include vcsrepo;
 
   if $ensure_sys_deps == true {
     class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
