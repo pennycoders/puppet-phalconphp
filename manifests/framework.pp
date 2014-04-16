@@ -68,7 +68,7 @@ class phalconphp::framework (
         Class['phalconphp::deps::sys'],
         ],
       onlyif    => "test -f ${tmpdir}/build/install",
-      command   => 'sudo ./install',
+      command   => './install',
       cwd       => "${workdir}/build",
       path      => [
         '/bin',

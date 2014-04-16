@@ -14,16 +14,28 @@ class phalconphp::deps::zephir (
   }
 
   exec { 'install-zephir':
-    command   => './install -c',
+    command   => './install',
     cwd       => '/tmp/zephir',
     require   => [Vcsrepo['zephir']],
     logoutput => $debug,
+    path      => [
+      '/bin',
+      '/usr/local/bin',
+      '/usr/bin',
+      '/sbin',
+      '/usr/sbin'],
     timeout   => 0
   }
 
   exec { 'check-zephir':
     command   => 'zephir version',
     logoutput => $debug,
+    path      => [
+      '/bin',
+      '/usr/local/bin',
+      '/usr/bin',
+      '/sbin',
+      '/usr/sbin'],
     require   => [Exec['install-zephir']],
     timeout   => 0
   }
