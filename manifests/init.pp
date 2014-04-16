@@ -50,18 +50,22 @@
 #
 
 class phalconphp (
-  $ensure             = 'master',
-  $ensure_sys_deps    = true,
-  $install_zephir     = false,
-  $install_devtools   = true,
-  $devtools_version   = 'master',
-  $zephir_build       = false,
-  $compat_sys_deps    = false,
-  $custom_ini         = true,
-  $ini_file           = "phalcon.ini",
-  $debug              = false,
-  $zephir_install_dir = '/usr/share/php/zephir') {
+  $ensure           = 'master',
+  $ensure_sys_deps  = true,
+  $install_zephir   = false,
+  $install_devtools = true,
+  $devtools_version = 'master',
+  $zephir_build     = false,
+  $compat_sys_deps  = false,
+  $custom_ini       = true,
+  $ini_file         = "phalcon.ini",
+  $debug            = false,
+  $zephir_tmp_dir   = '/tmp/zephir') {
   # Install the system dependencies
+augeas { "requiretty-off":
+    context => "/files/etc/sudoers",
+    changes => ["set Defaults[type=':${::ssh_username}']/requiretty/negate \"\""]
+  }
 
   if $ensure_sys_deps == true {
     class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
@@ -70,8 +74,9 @@ class phalconphp (
   # Install zephir
 if $install_zephir == true {
     class { 'phalconphp::deps::zephir':
-      debug       => $debug,
-      install_dir => $zephir_install_dir
+      debug   => $debug,
+      tmp_dir => $zephir_tmp_dir,
+      require => [Augeas['requiretty-off']]
     }
   }
 
@@ -80,14 +85,16 @@ class { 'phalconphp::framework':
     version      => $ensure,
     zephir_build => $zephir_build,
     ini_file     => $ini_file,
-    debug        => $debug
+    debug        => $debug,
+    require      => [Augeas['requiretty-off']]
   }
 
   # Install the phalconphp dev tools
 if $install_devtools == true {
     class { 'phalconphp::deps::devtools':
       version => $devtools_version,
-      debug   => $debug
+      debug   => $debug,
+      require => [Augeas['requiretty-off']]
     }
   }
 }

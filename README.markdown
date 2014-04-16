@@ -16,7 +16,7 @@ class { 'phalconphp':
     zephir_build => false,
     ini_file => 'phalcon.ini',
     debug => false,
-    zephir_install_dir=>'/usr/share/php/zephir'
+    zephir_tmp_dir=>'/usr/share/php/zephir'
 }
 ```    
     

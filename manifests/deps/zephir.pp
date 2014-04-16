@@ -1,13 +1,13 @@
 # Class: phalconphp::deps::zephir
 # Installs Zephir (http://zephir-lang.com/)
 class phalconphp::deps::zephir (
-  $debug       = false,
-  $install_dir = '/usr/share/php/zephir') {
+  $debug   = false,
+  $tmp_dir = '/tmp/zephir') {
   class { 'phalconphp::deps::jsonc': debug => $debug }
 
   vcsrepo { "zephir":
     ensure   => latest,
-    path     => $install_dir,
+    path     => $tmp_dir,
     provider => git,
     require  => [Class['phalconphp::deps::jsonc']],
     source   => 'https://github.com/phalcon/zephir.git',
@@ -16,7 +16,7 @@ class phalconphp::deps::zephir (
 
   exec { 'install-zephir':
     command   => './install',
-    cwd       => $install_dir,
+    cwd       => $tmp_dir,
     require   => [Vcsrepo['zephir']],
     logoutput => $debug,
     path      => [
@@ -26,13 +26,6 @@ class phalconphp::deps::zephir (
       '/sbin',
       '/usr/sbin'],
     timeout   => 0
-  }
-
-  file { 'zephir-bin':
-    ensure  => link,
-    path    => '/usr/bin/zephir',
-    target  => "${installdir}/bin/zephir",
-    require => [Exec['install-zephir']]
   }
 
   exec { 'check-zephir':
