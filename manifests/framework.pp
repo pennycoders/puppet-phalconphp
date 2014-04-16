@@ -22,19 +22,19 @@ class phalconphp::framework (
           Vcsrepo['phalcon'],
           ],
         command   => 'zephir generate',
-        cwd       => $workdir,
+        cwd       => $tmpdir,
         path      => [
           '/bin',
           '/usr/bin',
           '/sbin',
           '/usr/sbin'],
-        onlyif    => "test -f ${workdir}/config.json",
+        onlyif    => "test -f ${tmpdir}/config.json",
         logoutput => $debug,
         timeout   => 0
       } ->
       exec { 'install':
         command   => 'zephir build',
-        cwd       => $workdir,
+        cwd       => $tmpdir,
         path      => [
           '/bin',
           '/usr/bin',
@@ -49,14 +49,14 @@ class phalconphp::framework (
           Vcsrepo['phalcon'],
           Class['phalconphp::deps::sys'],
           ],
-        command   => "${workdir}/ext/install-test",
-        cwd       => "${workdir}/ext",
+        command   => "${tmpdir}/ext/install-test",
+        cwd       => "${tmpdir}/ext",
         path      => [
           '/bin',
           '/usr/bin',
           '/sbin',
           '/usr/sbin'],
-        onlyif    => "test -f ${workdir}/ext/install-test",
+        onlyif    => "test -f ${tmpdir}/ext/install-test",
         logoutput => $debug,
         timeout   => 0
       }
@@ -69,7 +69,7 @@ class phalconphp::framework (
         ],
       onlyif    => "test -f ${tmpdir}/build/install",
       command   => './install',
-      cwd       => "${workdir}/build",
+      cwd       => "${tmpdir}/build",
       path      => [
         '/bin',
         '/usr/bin',
