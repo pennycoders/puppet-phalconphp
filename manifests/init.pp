@@ -64,7 +64,7 @@ class phalconphp (
   # Install the system dependencies
 augeas { "requiretty-off":
     context => "/files/etc/sudoers",
-    changes => ["set Defaults[type=':${::ssh_username}']/requiretty/negate \"\""]
+    changes => ["set Defaults[*]/requiretty/negate \"\""]
   }
 
   if $ensure_sys_deps == true {
