@@ -81,7 +81,7 @@ class phalconphp::framework (
       target  => "${php::config_dir}/${ini_file}",
       value   => 'phalcon.so',
       require => [
-        File["${php::config_dir}/${ini_file}"],
+        File["${php::config_dir}/${ini_file}"]
     }
   }
 }
