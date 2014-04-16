@@ -80,6 +80,11 @@ class phalconphp::framework (
     }
   }
 
+  file { "${php::config_dir}/${ini_file}":
+    ensure  => file,
+    require => [Class['phalcon::deps::sys']]
+  }
+
   php::augeas { "load-phalcon-${version}":
     entry   => 'phalconphp/extension',
     value   => 'phalcon.so',
