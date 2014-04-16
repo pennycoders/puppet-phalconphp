@@ -74,6 +74,7 @@ class phalconphp::framework (
         '/bin',
         '/usr/bin',
         '/sbin',
+        '/usr/local/bin',
         '/usr/sbin'],
       logoutput => $debug,
       timeout   => 0
