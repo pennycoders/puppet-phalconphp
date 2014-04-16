@@ -5,24 +5,12 @@
 class phalconphp::deps::devtools (
   $version = '1.3.x',
   $debug   = false) {
-  exec { 'git-clone-devtools':
-    command   => "sudo git clone https://github.com/phalcon/phalcon-devtools.git -b ${version}",
-    cwd       => "/usr/share/php",
-    unless    => "test -d ./phalcon-devtools",
-    require   => [
-      Package['php'],
-      Class['phalconphp::deps::sys']],
-    logoutput => $debug,
-    timeout   => 0
-  }
-
-  exec { 'git-pull-devtools':
-    command   => "sudo git pull",
-    cwd       => "/usr/share/php/phalcon-devtools",
-    onlyif    => "sudo test -d ./phalcon-devtools",
-    require   => [Exec['git-clone-devtools']],
-    logoutput => $debug,
-    timeout   => 0
+  vcsrepo { "devtools":
+    ensure   => latest,
+    path     => '/usr/share/php/phalcon-devtools',
+    provider => git,
+    source   => 'https://github.com/phalcon/phalcon-devtools.git',
+    revision => $version
   }
 
   file { '/usr/bin/phalcon':
@@ -30,16 +18,16 @@ class phalconphp::deps::devtools (
     path    => '/usr/bin/phalcon',
     target  => "/usr/share/php/phalcon-devtools/phalcon.php",
     require => [
+      Class['phalconphp::deps::sys'],
       Class['phalconphp::framework'],
-      Exec['git-pull-devtools']]
+      Vcsrepo['devtools']]
   }
 
   file { '/usr/share/php/phalcon-devtools':
     ensure  => directory,
     recurse => true,
-    owner   => 'www-data',
-    group   => 'www-data',
-    require => [Exec['git-pull-devtools']]
+    owner   => $::ssh_username,
+    require => [Vcsrepo['devtools']]
   }
 
   exec { 'chmod+x-devtools':

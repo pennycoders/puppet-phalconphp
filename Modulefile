@@ -9,9 +9,10 @@ project_page 'https://github.com/pennycoders/puppet-phalconphp'
 
 ## Add dependencies, if any:
 dependency 'puppetlabs/stdlib','>=1.0.0'
+dependency 'puppetlabs/vcsrepo','>=0.2.0'
 dependency 'example42/yum','>=1.0.0'
 dependency 'puppetlabs/apt','>=1.0.0'
 dependency 'example42/php','>=2.0.17'
 dependency 'example42/puppi','>=1.0.0'
 
-version '1.0.69'
+version '1.0.70'

@@ -5,21 +5,13 @@ class phalconphp::framework (
   $zephir_build = false,
   $ini_file     = "phalcon.ini",
   $debug        = false) {
-  exec { 'git-clone-phalcon':
-    command   => "git clone -b ${version} https://github.com/phalcon/cphalcon.git",
-    cwd       => '/tmp',
-    require   => [Class['phalconphp::deps::sys']],
-    unless    => 'test -d /tmp/cphalcon',
-    logoutput => $debug,
-    timeout   => 0
-  } ->
-  exec { 'git-pull-phalcon':
-    command   => 'git pull',
-    cwd       => '/tmp/cphalcon',
-    onlyif    => 'test -d /tmp/cphalcon',
-    require   => [Exec['git-clone-phalcon']],
-    logoutput => $debug,
-    timeout   => 0
+  vcsrepo { "phalcon":
+    ensure   => latest,
+    path     => '/tmp/cphalcon',
+    provider => git,
+    require  => [Class['phalconphp::deps::sys']],
+    source   => 'https://github.com/phalcon/cphalcon.git',
+    revision => $version
   }
 
   file { "${php::config_dir}/${ini_file}":
@@ -34,7 +26,7 @@ class phalconphp::framework (
         cwd       => '/tmp/cphalcon',
         require   => [
           Class['phalconphp::deps::zephir'],
-          Exec['git-pull-phalcon']],
+          Vcsrepo['phalcon']],
         onlyif    => 'test -f /tmp/cphalcon/config.json',
         logoutput => $debug,
         timeout   => 0
@@ -79,17 +71,7 @@ class phalconphp::framework (
       command   => 'sudo ./install',
       cwd       => '/tmp/cphalcon/build',
       onlyif    => 'test -f /tmp/cphalcon/build/install',
-      require   => [Exec['git-pull-phalcon']],
-      logoutput => $debug,
-      timeout   => 0
-    }
-
-    exec { 'remove-phalcon-src-1.x':
-      cwd       => '/tmp',
-      command   => 'rm ./cphalcon -R -f',
-      require   => [
-        Exec['git-pull-phalcon'],
-        Exec['install-phalcon-1.x']],
+      require   => [Vcsrepo['phalcon']],
       logoutput => $debug,
       timeout   => 0
     }

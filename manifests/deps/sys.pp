@@ -2,65 +2,88 @@
 # Installs gcc, make, automake, autoconf, re2c, pcre, pcre-devel, libcurl, libcurl-devel, wget
 class phalconphp::deps::sys (
   $each_compat = false) {
+  define safepackage (
+    $ensure = present) {
+    if !defined(Package[$title]) {
+      package { $title: ensure => $ensure }
+    }
+  }
+
   case $::osfamily {
     'RedHat' : { # Define the package names for rhel
       case $::operatingsystem {
         'RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC', 'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS', 'OEL' : {
-          $phalcon_deps = [
-            'gcc',
-            'git',
-            'autoconf',
-            'make',
-            'automake',
-            're2c',
-            'pcre',
-            'pcre-devel',
-            'openssl',
-            'openssl-devel',
-            'libcurl',
-            'libcurl-devel',
-            'wget']
+          safepackage { 'gcc': }
+
+          safepackage { 'git': }
+
+          safepackage { 'autoconf': }
+
+          safepackage { 'make': }
+
+          safepackage { 'automake': }
+
+          safepackage { 're2c': }
+
+          safepackage { 'pcre': }
+
+          safepackage { 'pcre-devel': }
+
+          safepackage { 'openssl': }
+
+          safepackage { 'openssl-devel': }
+
+          safepackage { 'libcurl': }
+
+          safepackage { 'libcurl-devel': }
+
+          safepackage { 'wget': }
+
+          safepackage { 'php-devel': }
         }
         default : {
           fail('Unsupported RedHAT distro')
         }
       }
     }
-    'Debian' : { # Define the package names for debian
+    'Debian' : {
       case $::operatingsystem {
         'ubuntu', 'debian' : {
-          $phalcon_deps = [
-            'gcc',
-            'git',
-            'autoconf',
-            'make',
-            'automake',
-            're2c',
-            'pcre',
-            'pcre-devel',
-            'openssl',
-            'openssl-devel',
-            'libcurl',
-            'libcurl-devel',
-            'wget']
+          safepackage { 'gcc': }
+
+          safepackage { 'git': }
+
+          safepackage { 'autoconf': }
+
+          safepackage { 'make': }
+
+          safepackage { 'automake': }
+
+          safepackage { 're2c': }
+
+          safepackage { 'libpcre3': }
+
+          safepackage { 'libpcre3-dev': }
+
+          safepackage { 'libssl1.0.0': }
+
+          safepackage { 'libssl-dev': }
+
+          safepackage { 'libcurl3': }
+
+          safepackage { 'libcurl4-openssl-dev': }
+
+          safepackage { 'wget': }
+
+          safepackage { 'php5-dev': }
         }
         default            : {
           fail('Unsupported Debian distro')
         }
       }
     }
-    default  : { # fail, unknown OS
+    default  : {
       fail('Unknown Operating System')
-    }
-  }
-
-  if $each_compat == true {
-    package { $phalcon_deps: ensure => present }
-  } else {
-    each($phalcon_deps) |$phalcon_dep| {
-      if defined(Package[$phalcon_dep]) == false {
-        package { $phalcon_dep: ensure => present }
-      }
     }
   }
 }

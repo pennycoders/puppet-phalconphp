@@ -4,28 +4,23 @@ class phalconphp::deps::zephir (
   $debug = false) {
   class { 'phalconphp::deps::jsonc': debug => $debug }
 
-  exec { 'git-clone-zephir':
-    command   => 'git clone https://github.com/phalcon/zephir.git',
-    cwd       => '/tmp',
-    unless    => 'test -d /tmp/zephir',
-    require   => [Class['phalconphp::deps::sys']],
-    logoutput => $debug,
-    timeout   => 0
-  } ->
-  exec { 'git-pull-zephir':
-    command   => 'git pull',
-    cwd       => '/tmp/zephir',
-    onlyif    => 'test -d /tmp/zephir',
-    logoutput => $debug,
-    timeout   => 0
-  } ->
+  vcsrepo { "zephir":
+    ensure   => latest,
+    path     => '/tmp/zephir',
+    provider => git,
+    require  => [Class['phalconphp::deps::jsonc']],
+    source   => 'https://github.com/phalcon/zephir.git',
+    revision => 'master'
+  }
+
   exec { 'install-zephir':
     command   => './install -c',
     cwd       => '/tmp/zephir',
-    require   => [Class['phalconphp::deps::jsonc']],
+    require   => [Vcsrepo['zephir']],
     logoutput => $debug,
     timeout   => 0
-  } ->
+  }
+
   exec { 'check-zephir':
     command   => 'zephir version',
     logoutput => $debug,
