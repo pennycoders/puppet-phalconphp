@@ -36,7 +36,7 @@ class phalconphp::deps::jsonc (
     timeout   => 0
   } ->
   exec { 'install-json-c':
-    command   => "sudo make -j${::processorcount} install",
+    command   => "make -j${::processorcount} install",
     cwd       => '/tmp/json-c',
     path      => [
       '/bin',
