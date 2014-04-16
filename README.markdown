@@ -75,4 +75,5 @@ Devtools does not seem to be fully compatible with phalconphp 2.x
 * Add / test support for Debian platforms
     
 ### Credits: ###
-    Special thanks to @ifrpl, for forking the repo (His improvements made me get started on getting this module sorted out the way it is now)
+
+Special thanks to @ifrpl, for forking the repo (His improvements made me get started on getting this module sorted out the way it is now)

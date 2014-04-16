@@ -7,7 +7,7 @@ class phalconphp::deps::zephir (
 
   vcsrepo { "zephir":
     ensure   => latest,
-    path     => $installdir,
+    path     => $install_dir,
     provider => git,
     require  => [Class['phalconphp::deps::jsonc']],
     source   => 'https://github.com/phalcon/zephir.git',
