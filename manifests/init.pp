@@ -71,9 +71,7 @@ class phalconphp (
 if $install_zephir == true {
     class { 'phalconphp::deps::zephir':
       debug   => $debug,
-      tmp_dir => $zephir_tmp_dir,
-      require => [File["/etc/sudoers.d/0-phalconphp"]]
-    }
+      tmp_dir => $zephir_tmp_dir
   }
 
   # Install the actual framework
