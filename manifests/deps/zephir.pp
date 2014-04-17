@@ -14,19 +14,10 @@ class phalconphp::deps::zephir (
     revision => 'master'
   }
 
-  file { "create-sudoers-file":
-    path    => "/etc/sudoers.d/0-phalconphp",
-    ensure  => file,
-    content => "Default:root !requiretty",
-    owner   => "root"
-  }
-
   exec { 'install-zephir':
-    command   => './install -c',
+    command   => 'sh ./install -c -u root',
     cwd       => $tmp_dir,
-    require   => [
-      File["create-sudoers-file"],
-      Vcsrepo['zephir']],
+    require   => [Vcsrepo['zephir']],
     logoutput => $debug,
     path      => [
       '/bin',
@@ -35,12 +26,6 @@ class phalconphp::deps::zephir (
       '/sbin',
       '/usr/sbin'],
     timeout   => 0
-  }
-
-  file { "remove-sudoers-file":
-    path    => "/etc/sudoers.d/0-phalconphp",
-    ensure  => absent,
-    require => [Exec["install-zephir"]]
   }
 
   exec { 'check-zephir':
