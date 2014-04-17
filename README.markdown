@@ -68,7 +68,9 @@ In regards to compat_sys_deps, see http://forum.phalconphp.com/discussion/1660/p
 This module has been rigurously tested on CentOS 6.5 x64
     
 Devtools does not seem to be fully compatible with phalconphp 2.x
-    
+
+Until [this](https://github.com/phalcon/zephir/issues/344) issue is fixed, Zephir will have to be installed manually.
+
 ### TODO
     
 * Add the ability to create phalcon projects via puppet
