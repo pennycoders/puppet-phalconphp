@@ -62,9 +62,17 @@ class phalconphp (
   $debug            = false,
   $zephir_tmp_dir   = '/tmp/zephir') {
   # Install the system dependencies
-augeas { "requiretty-off":
-    context => "/files/etc/sudoers",
-    changes => ["set Defaults[*]/requiretty/negate \"\""]
+
+  augeas { "requiretty-off":
+    incl    => "/etc/sudoers",
+    lens    => "Sudoers.lns",
+    changes => [
+      "ins #comment before Defaults[requiretty]",
+      "set #comment[following-sibling::Defaults/requiretty][last()] 'Defaults requiretty'",
+      "rm Defaults/requiretty",
+      "rm Defaults[count(*) = 0]",
+      ],
+    onlyif  => "match Defaults/requiretty size > 0";
   }
 
   if $ensure_sys_deps == true {
