@@ -16,7 +16,7 @@ class { 'phalconphp':
     zephir_build => false,
     ini_file => 'phalcon.ini',
     debug => false,
-    zephir_tmp_dir=>'/usr/share/php/zephir'
+    zephir_tmp_dir=>'/tmp/zephir'
 }
 ```    
     
@@ -35,12 +35,13 @@ devtools_version
 ensure_sys_deps
 ensure 
 install_devtools
-   devtools_version
+devtools_version
 install_zephir
-   compat_sys_deps
+compat_sys_deps
 zephir_build
 ini_file
 debug
+zephir_tmp_dir
 ```
 
 ### Prerequisites
