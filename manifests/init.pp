@@ -63,12 +63,6 @@ class phalconphp (
   $zephir_tmp_dir   = '/tmp/zephir') {
   # Install the system dependencies
 
-  file { "/etc/sudoers.d/0-phalconphp":
-    ensure  => file,
-    content => "Default:root !requiretty",
-    owner   => "root"
-  }
-
   if $ensure_sys_deps == true {
     class { 'phalconphp::deps::sys': each_compat => $compat_sys_deps }
   }
@@ -79,14 +73,6 @@ if $install_zephir == true {
       debug   => $debug,
       tmp_dir => $zephir_tmp_dir,
       require => [File["/etc/sudoers.d/0-phalconphp"]]
-    }
-
-    file { "remove-sudoers-file":
-      path    => "/etc/sudoers.d/0-phalconphp",
-      ensure  => absent,
-      content => "Default:root !requiretty",
-      owner   => "root",
-      require => [Class["phalcon::deps::zephir"]]
     }
   }
 
