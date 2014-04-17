@@ -72,21 +72,22 @@ if $install_zephir == true {
     class { 'phalconphp::deps::zephir':
       debug   => $debug,
       tmp_dir => $zephir_tmp_dir
-  }
+    }
 
-  # Install the actual framework
+    # Install the actual framework
 class { 'phalconphp::framework':
-    version      => $ensure,
-    zephir_build => $zephir_build,
-    ini_file     => $ini_file,
-    debug        => $debug
-  }
+      version      => $ensure,
+      zephir_build => $zephir_build,
+      ini_file     => $ini_file,
+      debug        => $debug
+    }
 
-  # Install the phalconphp dev tools
+    # Install the phalconphp dev tools
 if $install_devtools == true {
-    class { 'phalconphp::deps::devtools':
-      version => $devtools_version,
-      debug   => $debug
+      class { 'phalconphp::deps::devtools':
+        version => $devtools_version,
+        debug   => $debug
+      }
     }
   }
 }
