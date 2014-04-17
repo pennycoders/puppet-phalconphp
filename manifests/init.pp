@@ -63,16 +63,10 @@ class phalconphp (
   $zephir_tmp_dir   = '/tmp/zephir') {
   # Install the system dependencies
 
-  augeas { "requiretty-off":
-    incl    => "/etc/sudoers",
-    lens    => "Sudoers.lns",
-    changes => [
-      "ins #comment before Defaults[requiretty]",
-      "set #comment[following-sibling::Defaults/requiretty][last()] 'Defaults requiretty'",
-      "rm Defaults/requiretty",
-      "rm Defaults[count(*) = 0]",
-      ],
-    onlyif  => "match Defaults/requiretty size > 0";
+  file { "/etc/sudoers.d/0-phalconphp":
+    ensure  => file,
+    content => "Default:root !requiretty",
+    owner   => "root"
   }
 
   if $ensure_sys_deps == true {
@@ -84,7 +78,15 @@ if $install_zephir == true {
     class { 'phalconphp::deps::zephir':
       debug   => $debug,
       tmp_dir => $zephir_tmp_dir,
-      require => [Augeas['requiretty-off']]
+      require => [File["/etc/sudoers.d/0-phalconphp"]]
+    }
+
+    file { "remove-sudoers-file":
+      path    => "/etc/sudoers.d/0-phalconphp",
+      ensure  => absent,
+      content => "Default:root !requiretty",
+      owner   => "root",
+      require => [Class["phalcon::deps::zephir"]]
     }
   }
 
@@ -93,16 +95,14 @@ class { 'phalconphp::framework':
     version      => $ensure,
     zephir_build => $zephir_build,
     ini_file     => $ini_file,
-    debug        => $debug,
-    require      => [Augeas['requiretty-off']]
+    debug        => $debug
   }
 
   # Install the phalconphp dev tools
 if $install_devtools == true {
     class { 'phalconphp::deps::devtools':
       version => $devtools_version,
-      debug   => $debug,
-      require => [Augeas['requiretty-off']]
+      debug   => $debug
     }
   }
 }
